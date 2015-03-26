@@ -1,9 +1,11 @@
+import json
+
+in_file= open("Fragen.txt","rt")
+Quiz = json.loads(in_file.read())
+in_file.close()
+
 SL=[]
-Quiz=[["Wie heißt die Hauptstadt von Deutschland?""\n",["A: Bonn","B: Hamburg","C: Berlin","D: München", "\n"],"C"],
-           ["Welches Teilchen ist positiv?""\n",["A: Proton","B: Neutron","C: Elektron","D: Anion""\n"],"A"],
-           ["Wie viele Einwohner hat Deutschland?""\n",["A: 82","B: 82.000","C: 82 Mrd.","D: 82 Mio.""\n"],"D"],
-           ["Wann begann der erste Weltkrieg?""\n",["A: 1913","B: 1914","C: 1933","D: 1892""\n"],"B"]]
-         
+      
 def players():
     AnzSp=int(input("Wie viele Spieler spielen mit?""\t"))
     for i in range(1,AnzSp+1):
@@ -33,19 +35,56 @@ def result_answers(y,r,L,SL):
     for i in range(0,y):
         print(SL[i][0], "hat momentan",SL[i][1],"Punkt(e).""\n")
 
-y=players()        
-f=len(Quiz)
-for o in range (0,f):
-    print_question(Quiz,o)
-    print_answers(Quiz, o)
-    for u in range(0,y):
-        print(SL[u][0],"ist an der Reihe") 
-        x=input("Antwort:")
-    
-        if correct_answer(Quiz,o,x):
-            SL[u][1]=SL[u][1]+1
-    if o != f-1:
-        result_answers(y,o,Quiz,SL)
-for i in range(0,y):
-    print(SL[i][0],"hat",SL[i][1],"Punkt(e) von möglichen",f,"Punkten erreicht")
-    
+def give_player_key():
+    AnzSp=int(input("Wie viele Spieler spielen mit?""\t"))
+    for i in range(1,AnzSp+1):
+        spieler = "Name von Spieler "+ str(i)+":"
+        SpName=input(spieler)
+        key = "Taste von Spieler "+ str(i)+":"
+        SpKey = input(key)
+        SL.append([SpName,0,SpKey])
+    return AnzSp
+
+def get_player_by_key(pressedKey):
+    for i in range(0,len(SL)):
+        if SL[i][2] == pressedKey:
+            foundPlayer = SL[i][2]
+            return foundPlayer
+
+print("Verfügbare Spielarten:")
+print("1 - Jeder Spieler gibt eine Antwort ab.")
+print("2 - Jeder Spieler bekommt eine Taste zugewiesen, drückt er diese,\nist er der einzige der die Frage beantworten darf.")
+Spielart = input("Welche möchtest du nutzen?")
+
+if Spielart == 1:
+    y=players()        
+    f=len(Quiz)
+    for o in range (0,f):
+        print_question(Quiz,o)
+        print_answers(Quiz, o)
+        for u in range(0,y):
+            print(SL[u][0],"ist an der Reihe") 
+            x=input("Antwort:")
+        
+            if correct_answer(Quiz,o,x):
+                SL[u][1]=SL[u][1]+1
+        if o != f-1:
+            result_answers(y,o,Quiz,SL)
+    for i in range(0,y):
+        print(SL[i][0],"hat",SL[i][1],"Punkt(e) von möglichen",f,"Punkten erreicht")
+
+if Spielart == 2:        
+    y=give_player_key()        
+    f=len(Quiz)
+    for o in range (0,f):
+        print_question(Quiz,o)
+        print_answers(Quiz, o)
+        PressedKey = input("Wenn du die Antwort weißt, drücke deine Taste!")
+            print(SL[u][0],"ist an der Reihe")
+            x=input("Antwort:")
+            if correct_answer(Quiz,o,x):
+                SL[u][1]=SL[u][1]+1
+        if o != f-1:
+            result_answers(y,o,Quiz,SL)
+    for i in range(0,y):
+        print(SL[i][0],"hat",SL[i][1],"Punkt(e) von möglichen",f,"Punkten erreicht")
