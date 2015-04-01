@@ -1,5 +1,5 @@
 import json
-from PlayerListProcessors import *
+from playerListProcessors import *
 from PrintTexts import *
 from AnswerProcessors import *
 from getPlayerByKey import *
