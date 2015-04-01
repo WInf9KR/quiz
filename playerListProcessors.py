@@ -25,3 +25,10 @@ def savePlayerList(liste):
     out_file = open('playerList.txt', 'wt')
     out_file.write(json.dumps(liste))
     out_file.close()
+
+# emptyPlayerList ist derzeit nicht im Programm genutzt
+def emptyPlayerList():
+    empty = "Hier gibt es derzeit nichts. Starte den Quiz, dann schon!"
+    out_file = open('playerList.txt', 'wt')
+    out_file.write(json.dumps(empty))
+    out_file.close()
