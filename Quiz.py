@@ -11,9 +11,6 @@ in_file.close()
 
 # Spielerliste importieren
 SL=[]
-in_file = open ("playerList.txt","rt")
-SL = json.loads(in_file.read())
-in_file.close()
 
 def refreshPlayerList():
     in_file = open ("playerList.txt","rt")
@@ -28,7 +25,8 @@ Spielart = input("Welche möchtest du nutzen?")
 
 # Spielvariante 1
 if int(Spielart) == 1:
-      y=players()        
+      y=players()
+      refreshPlayerList()
       f=len(Quiz)
       for o in range (0,f):
           print_question(Quiz,o)
@@ -49,6 +47,7 @@ if int(Spielart) == 1:
 else:        
     # Spielvariante 2
     give_player_key()
+    refreshPlayerList()
     f=len(Quiz)
     for o in range (0,f):
         print_question(Quiz,o)
